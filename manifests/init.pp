@@ -31,6 +31,12 @@ define winoptionalfeature($feature_name = $title, $ensure, $restart = false, $lo
             logoutput => true,
             provider  => powershell,
         }
+            
+        notify {"winoptionalfeature-add-msg-${strfeature_name}":
+            message => "Invoking Enable-WindowsOptionalFeature: ${admin_wrapped_cmd}",
+        }
+            
+        Notify["winoptionalfeature-add-msg-${strfeature_name}"] -> Exec["winoptionalfeature-install-feature-${strfeature_name}"]
     }
     elsif $ensure == 'absent'{
         $cmd = "Disable-WindowsOptionalFeature -Online ${strfeature_name} ${strrestart} ${strlogfile} "
@@ -45,5 +51,11 @@ define winoptionalfeature($feature_name = $title, $ensure, $restart = false, $lo
             logoutput => true,
             provider  => powershell,
            }
+        
+        notify {"winoptionalfeature-remove-msg-${strfeature_name}":
+            message => "Invoking Disable-WindowsOptionalFeature: ${admin_wrapped_cmd}",
+        }
+            
+        Notify["winoptionalfeature-remove-msg-${strfeature_name}"] -> Exec["winoptionalfeature-remove-feature-${strfeature_name}"]
     }
 }

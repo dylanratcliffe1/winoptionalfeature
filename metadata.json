@@ -5,15 +5,21 @@
   "types": [
 
   ],
-  "description": "This puppet module creates a new defined type 'winoptionalfeature'. This can be called within any\nclass to install/remove windows optional features on non Windows Server OSes based on their ID string ex: 'Web-Server' or a \ncomma seperated list of feature IDs ex: 'Telnet-Client,Telnet-Server' \n\nThe functionality is simply a wrapper to the powershell cmdlets 'Enable-WindowsOptionalFeature' and 'Disable-WindowsOptionalFeature'.\nAll cmdlet parameters are supported by this module. For details about how the above cmdlets operates, please see the \nfollowing microsoft KB Article: http://technet.microsoft.com/en-us/library/cc732263.aspx#BKMK_powershell\n\nInspired from puppet module: https://forge.puppetlabs.com/admin36/winfeature",
-  "version": "0.0.3",
+  "description": "This puppet module creates a new defined type 'winoptionalfeature'. This can be called within any\nclass to install/remove windows features based on their ID string ex: 'Web-Server' or a \ncomma seperated list of feature IDs ex: 'Telnet-Client,Telnet-Server' \n\nThe functionality is simply a wrapper to the powershell cmdlets 'Enable-WindowsOptionalFeature' and 'Disable-WindowsOptionalFeature'.\nAll cmdlet parameters are supported by this module.\n\nInspired from puppet module: https://forge.puppetlabs.com/admin36/winfeature",
+  "version": "0.0.2",
   "summary": "Installs and Removes Windows Features",
   "name": "dylanratcliffe-winoptionalfeature",
   "author": "Dylan Ratcliffe",
   "dependencies": [
     {
-      "version_requirement": ">=0.0.5",
-      "name": "joshcooper/powershell"
+      "name": "joshcooper/powershell",
+      "version_requirement": ">=0.0.5"
     }
-  ]
+  ],
+  "checksums": {
+    "Modulefile": "d91a69834ac4e39832d3448b1a270cf8",
+    "README.md": "9fa406743f16b0a9357e5ff65413aca5",
+    "license": "df1e40caa04a8916d4373abe9c19e465",
+    "manifests/init.pp": "903eb33c981fdf1a524c71c82f77093b"
+  }
 }
