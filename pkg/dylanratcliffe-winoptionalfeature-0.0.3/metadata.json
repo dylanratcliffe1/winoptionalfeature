@@ -20,6 +20,6 @@
     "Modulefile": "43c8ec2860fdd4f613fc20d045add98e",
     "README.md": "9fa406743f16b0a9357e5ff65413aca5",
     "license": "df1e40caa04a8916d4373abe9c19e465",
-    "manifests/init.pp": "50367e8403ad0efd7077f532ebf678d1"
+    "manifests/init.pp": "149e5e4b6188efaa930f37906da96ef1"
   }
 }

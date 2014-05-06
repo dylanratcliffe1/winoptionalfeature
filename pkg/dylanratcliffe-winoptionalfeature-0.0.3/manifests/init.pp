@@ -21,12 +21,11 @@ define winoptionalfeature($feature_name = $title, $ensure, $restart = false, $lo
         $cmd = "Enable-WindowsOptionalFeature -Online ${strfeature_name} ${strrestart} ${strlogfile} "
         $input = $cmd
         $admin_wrapped_cmd = "start-process powershell -ArgumentList '-noprofile -command ${input}' -verb RunAs -wait -WindowStyle Hidden"
-        exec { "winoptionalfeature-install-feature-${strfeature_name}" :
+        exec { "Ensure:${$ensure}" :
             command   => $admin_wrapped_cmd,
             # FIXED IT WOO!
             onlyif    => [
-                            "start-process powershell -ArgumentList '-noprofile -command New-Item HKCU:\\Software\\puppet -Name State -Value ((Get-WindowsOptionalFeature -online -FeatureName ${feature_name}).State) -Force' -verb RunAs -Wait -WindowStyle Hidden",
-                            "if (((Get-ItemProperty HKCU:\\Software\\puppet\\state).'(default)') -eq \"Enabled\") { exit 1 }"
+                            "if (((start-process powershell -ArgumentList \"-noprofile -command &{`\$state = (Get-WindowsOptionalFeature -online -FeatureName ${feature_name}).State; if (`\$state -eq \'Enabled\') {exit 1}}\" -verb RunAs -Wait -PassThru -WindowStyle Hidden).ExitCode) -ne 0) { Exit 1 }",
                          ],
             logoutput => true,
             provider  => powershell,
@@ -36,14 +35,13 @@ define winoptionalfeature($feature_name = $title, $ensure, $restart = false, $lo
         $cmd = "Disable-WindowsOptionalFeature -Online ${strfeature_name} ${strrestart} ${strlogfile} "
         $input = $cmd
         $admin_wrapped_cmd = "start-process powershell -ArgumentList '-noprofile -command ${input}' -verb RunAs -wait -WindowStyle Hidden"
-        exec { "winoptionalfeature-remove-feature-${strfeature_name}" :
+        exec { "Ensure:${$ensure}" :
             command   => $admin_wrapped_cmd,
             onlyif    => [
-                            "start-process powershell -ArgumentList '-noprofile -command New-Item HKCU:\\Software\\puppet -Name State -Value ((Get-WindowsOptionalFeature -online -FeatureName ${feature_name}).State) -Force' -verb RunAs -wait -WindowStyle Hidden",
-                            "if (((Get-ItemProperty HKCU:\\Software\\puppet\\state).'(default)') -eq \"Disabled\") { exit 1 }"
+                            "if (((start-process powershell -ArgumentList \"-noprofile -command &{`\$state = (Get-WindowsOptionalFeature -online -FeatureName ${feature_name}).State; if (`\$state -eq \'Disabled\') {exit 1}}\" -verb RunAs -Wait -PassThru -WindowStyle Hidden).ExitCode) -ne 0) { Exit 1 }",
                          ],
             logoutput => true,
             provider  => powershell,
-           }
+        }
     }
 }
