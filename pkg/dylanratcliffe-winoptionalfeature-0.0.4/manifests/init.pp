@@ -21,7 +21,7 @@ define winoptionalfeature($feature_name = $title, $ensure, $restart = false, $lo
         $cmd = "Enable-WindowsOptionalFeature -Online ${strfeature_name} ${strrestart} ${strlogfile} "
         $input = $cmd
         $admin_wrapped_cmd = "start-process powershell -ArgumentList '-noprofile -command ${input}' -verb RunAs -wait -WindowStyle Hidden"
-        exec { "Install ${feature_name}" :
+        exec { "Ensure:present" :
             command   => $admin_wrapped_cmd,
             # FIXED IT WOO!
             onlyif    => [
@@ -35,7 +35,7 @@ define winoptionalfeature($feature_name = $title, $ensure, $restart = false, $lo
         $cmd = "Disable-WindowsOptionalFeature -Online ${strfeature_name} ${strrestart} ${strlogfile} "
         $input = $cmd
         $admin_wrapped_cmd = "start-process powershell -ArgumentList '-noprofile -command ${input}' -verb RunAs -wait -WindowStyle Hidden"
-        exec { "Remove ${feature_name}" :
+        exec { "Ensure:absent" :
             command   => $admin_wrapped_cmd,
             onlyif    => [
                             "if (((start-process powershell -ArgumentList \"-noprofile -command &{`\$state = (Get-WindowsOptionalFeature -online -FeatureName ${feature_name}).State; if (`\$state -eq \'Disabled\') {exit 1}}\" -verb RunAs -Wait -PassThru -WindowStyle Hidden).ExitCode) -ne 0) { Exit 1 }",

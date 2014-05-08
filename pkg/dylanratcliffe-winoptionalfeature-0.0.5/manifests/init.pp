@@ -21,11 +21,11 @@ define winoptionalfeature($feature_name = $title, $ensure, $restart = false, $lo
         $cmd = "Enable-WindowsOptionalFeature -Online ${strfeature_name} ${strrestart} ${strlogfile} "
         $input = $cmd
         $admin_wrapped_cmd = "start-process powershell -ArgumentList '-noprofile -command ${input}' -verb RunAs -wait -WindowStyle Hidden"
-        exec { "Ensure:${$ensure}" :
+        exec { "Install ${feature_name}" :
             command   => $admin_wrapped_cmd,
             # FIXED IT WOO!
             onlyif    => [
-                            "if (((start-process powershell -ArgumentList \"-noprofile -command &{`\$state = (Get-WindowsOptionalFeature -online -FeatureName ${feature_name}).State; if (`\$state -eq \'Enabled\') {exit 1}}\" -verb RunAs -Wait -PassThru).ExitCode) -ne 0) { Exit 1 }",
+                            "if (((start-process powershell -ArgumentList \"-noprofile -command &{`\$state = (Get-WindowsOptionalFeature -online -FeatureName ${feature_name}).State; if (`\$state -eq \'Enabled\') {exit 1}}\" -verb RunAs -Wait -PassThru -WindowStyle Hidden).ExitCode) -ne 0) { Exit 1 }",
                          ],
             logoutput => true,
             provider  => powershell,
@@ -35,10 +35,10 @@ define winoptionalfeature($feature_name = $title, $ensure, $restart = false, $lo
         $cmd = "Disable-WindowsOptionalFeature -Online ${strfeature_name} ${strrestart} ${strlogfile} "
         $input = $cmd
         $admin_wrapped_cmd = "start-process powershell -ArgumentList '-noprofile -command ${input}' -verb RunAs -wait -WindowStyle Hidden"
-        exec { "Ensure:${$ensure}" :
+        exec { "Remove ${feature_name}" :
             command   => $admin_wrapped_cmd,
             onlyif    => [
-                            "if (((start-process powershell -ArgumentList \"-noprofile -command &{`\$state = (Get-WindowsOptionalFeature -online -FeatureName ${feature_name}).State; if (`\$state -eq \'Disabled\') {exit 1}}\" -verb RunAs -Wait -PassThru).ExitCode) -ne 0) { Exit 1 }",
+                            "if (((start-process powershell -ArgumentList \"-noprofile -command &{`\$state = (Get-WindowsOptionalFeature -online -FeatureName ${feature_name}).State; if (`\$state -eq \'Disabled\') {exit 1}}\" -verb RunAs -Wait -PassThru -WindowStyle Hidden).ExitCode) -ne 0) { Exit 1 }",
                          ],
             logoutput => true,
             provider  => powershell,

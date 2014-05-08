@@ -1,5 +1,5 @@
 name 'dylanratcliffe-winoptionalfeature'
-version '0.0.2'
+version '0.0.4'
 dependency 'joshcooper/powershell', '>=0.0.5'
 summary "Installs and Removes Windows Features"
 description "This puppet module creates a new defined type 'winoptionalfeature'. This can be called within any
@@ -10,6 +10,6 @@ The functionality is simply a wrapper to the powershell cmdlets 'Enable-WindowsO
 All cmdlet parameters are supported by this module.
 
 Inspired from puppet module: https://forge.puppetlabs.com/admin36/winfeature"
-source ""
+source "https://github.com/dylanratcliffe1/winoptionalfeature"
 project_page ""
 author "Dylan Ratcliffe"
