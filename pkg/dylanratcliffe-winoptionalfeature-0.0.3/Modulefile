@@ -10,6 +10,6 @@ The functionality is simply a wrapper to the powershell cmdlets 'Enable-WindowsO
 All cmdlet parameters are supported by this module.
 
 Inspired from puppet module: https://forge.puppetlabs.com/admin36/winfeature"
-source ""
+source "https://github.com/dylanratcliffe1/winoptionalfeature"
 project_page ""
 author "Dylan Ratcliffe"

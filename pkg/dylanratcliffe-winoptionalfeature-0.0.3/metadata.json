@@ -1,7 +1,7 @@
 {
   "project_page": "",
   "license": "Apache License, Version 2.0",
-  "source": "",
+  "source": "https://github.com/dylanratcliffe1/winoptionalfeature",
   "types": [
 
   ],
@@ -17,7 +17,7 @@
     }
   ],
   "checksums": {
-    "Modulefile": "43c8ec2860fdd4f613fc20d045add98e",
+    "Modulefile": "37383bd087dbe30a25e0d5fc0094dd99",
     "README.md": "9fa406743f16b0a9357e5ff65413aca5",
     "license": "df1e40caa04a8916d4373abe9c19e465",
     "manifests/init.pp": "149e5e4b6188efaa930f37906da96ef1"
